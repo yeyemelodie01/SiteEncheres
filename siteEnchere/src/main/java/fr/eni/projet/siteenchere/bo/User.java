@@ -1,9 +1,6 @@
 package fr.eni.projet.siteenchere.bo;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +36,14 @@ public class User {
     @Size(min=4, max = 30)
     private String password;
     private final static Long credit = 120L;
+    @AssertFalse
     private boolean admin;
     private List<Article> salesList = new ArrayList<>();
     private List<Article> purchasedItemsList = new ArrayList<>();
     private List<Bid> currentBid = new ArrayList<>();
+
+    public User() {
+    }
 
     public User(Long idUser, String pseudo, String lastName, String firstName, String email, String phone, String roadName, String postalCode, String city, String password, boolean admin, List<Article> salesList, List<Article> purchasedItemsList, List<Bid> currentBid) {
         this.idUser = idUser;
