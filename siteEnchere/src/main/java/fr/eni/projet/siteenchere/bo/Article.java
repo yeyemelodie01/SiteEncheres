@@ -27,6 +27,7 @@ public class Article {
     @Min(value = 10)
     @Max(value = 600)
     private Integer startingPrice;
+
     @NotBlank
     private Integer finalPrice;
     private String sellingStatus;
