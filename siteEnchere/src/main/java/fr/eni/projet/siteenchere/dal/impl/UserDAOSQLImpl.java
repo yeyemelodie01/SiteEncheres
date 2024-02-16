@@ -1,16 +1,15 @@
 package fr.eni.projet.siteenchere.dal.impl;
 
 import fr.eni.projet.siteenchere.bo.User;
-import fr.eni.projet.siteenchere.dal.UserDAO;
+import fr.eni.projet.siteenchere.dal.UserDAOInterface;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 
-public class UserDAOSQLImpl implements UserDAO {
+public class UserDAOSQLImpl implements UserDAOInterface {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private final static String CREATE_USER = "INSERT INTO USERS(pseudo, lastname, firstname, email, phone, road_name, postal_code, city, password, credit, admin)"
@@ -21,7 +20,7 @@ public class UserDAOSQLImpl implements UserDAO {
     private final static String UPDATE_USER = "UPDATE USERS SET pseudo = :pseudo, lastname = :lastname, firstname = :firstname, email = :email, phone = :phone, roadName = :roadName, postalCode = :postalCode, town = :town, password = :password WHERE id_user = :idUser;";
     private final static String DELETE_USER = "DELETE FROM USERS WHERE id_user = :idUser";
 
-    
+
     public UserDAOSQLImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
