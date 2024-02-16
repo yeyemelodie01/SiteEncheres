@@ -2,7 +2,7 @@ package fr.eni.projet.siteenchere.dal;
 
 import fr.eni.projet.siteenchere.bo.User;
 
-public interface UserDAO {
+public interface UserDAOInterface {
     void createUser(User user);
     User readUserById(Long idUser);
     User readUserByEmail(String email);
