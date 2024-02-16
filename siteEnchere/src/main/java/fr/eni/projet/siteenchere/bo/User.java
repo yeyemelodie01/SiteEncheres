@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-    private Long idUser;
+    private Long idUser = 0L;
     @NotBlank
     @Size(min=4, max = 30)
     private String pseudo;
@@ -60,36 +60,6 @@ public class User {
         this.salesList = salesList;
         this.purchasedItemsList = purchasedItemsList;
         this.currentBid = currentBid;
-    }
-
-    public User(String pseudo, String lastName, String firstName, String email, String phone, String roadName, String postalCode, String city, String password, boolean admin, List<Article> salesList, List<Article> purchasedItemsList, List<Bid> currentBid) {
-        this.pseudo = pseudo;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.email = email;
-        this.phone = phone;
-        this.roadName = roadName;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.password = password;
-        this.admin = admin;
-        this.salesList = salesList;
-        this.purchasedItemsList = purchasedItemsList;
-        this.currentBid = currentBid;
-    }
-
-    public User(Long idUser, String pseudo, String lastName, String firstName, String email, String phone, String roadName, String postalCode, String city, String password, boolean admin) {
-        this.idUser = idUser;
-        this.pseudo = pseudo;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.email = email;
-        this.phone = phone;
-        this.roadName = roadName;
-        this.postalCode = postalCode;
-        this.city = city;
-        this.password = password;
-        this.admin = admin;
     }
 
     public User(String pseudo, String lastName, String firstName, String email, String phone, String roadName, String postalCode, String city, String password, boolean admin) {
