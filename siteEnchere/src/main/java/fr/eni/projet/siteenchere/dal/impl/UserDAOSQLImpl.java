@@ -12,13 +12,13 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 public class UserDAOSQLImpl implements UserDAOInterface {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private final static String CREATE_USER = "INSERT INTO USERS(pseudo, lastname, firstname, email, phone, road_name, postal_code, city, password, credit, admin)"
+    private static final String CREATE_USER = "INSERT INTO USERS(pseudo, lastname, firstname, email, phone, road_name, postal_code, city, password, credit, admin)"
             + " VALUES (:pseudo, :lastname, :firstname, :email, :phone, :roadName, :postalCode, :town, :password, 200, false);";
 
-    private final static String READ_USER_BY_ID = "SELECT * FROM USERS WHERE id_user = :idUser;";
-    private final static String READ_USER_BY_EMAIL = "SELECT * FROM USERS WHERE email = :email;";
-    private final static String UPDATE_USER = "UPDATE USERS SET pseudo = :pseudo, lastname = :lastname, firstname = :firstname, email = :email, phone = :phone, roadName = :roadName, postalCode = :postalCode, town = :town, password = :password WHERE id_user = :idUser;";
-    private final static String DELETE_USER = "DELETE FROM USERS WHERE id_user = :idUser";
+    private static final String READ_USER_BY_ID = "SELECT * FROM USERS WHERE id_user = :idUser;";
+    private static final String READ_USER_BY_EMAIL = "SELECT * FROM USERS WHERE email = :email;";
+    private static final String UPDATE_USER = "UPDATE USERS SET pseudo = :pseudo, lastname = :lastname, firstname = :firstname, email = :email, phone = :phone, roadName = :roadName, postalCode = :postalCode, town = :town, password = :password WHERE id_user = :idUser;";
+    private static final String DELETE_USER = "DELETE FROM USERS WHERE id_user = :idUser";
 
 
     public UserDAOSQLImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
