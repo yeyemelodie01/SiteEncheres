@@ -5,7 +5,6 @@ import fr.eni.projet.siteenchere.bo.Bid;
 import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.dal.BidDAOInterface;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,10 +19,16 @@ public class BidDAOSQLImpl implements BidDAOInterface {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     UserDAOInterface userDAOInterface;
-    
-    private final static String ADD_BID = "INSERT INTO BID (id_user, id_article, bid_date, bid_amount) VALUES (:idUser, :idArticle, :bidDate, :bidAmount);";
-    private final static String FIND_ONE_BID = "SELECT * FROM BID INNER JOIN ARTICLES ON BID.id_article = ARTICLES.id_article INNER JOIN USERS ON BID.id_user = USERS.id_user WHERE BID.id_article = :idArticle;";
-    private final static String FIND_ALL_BID = "SELECT * FROM BID;";
+
+    public BidDAOSQLImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, UserDAOInterface userDAOInterface) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.userDAOInterface = userDAOInterface;
+    }
+
+    private static final String ADD_BID = "INSERT INTO BID (id_user, id_article, bid_date, bid_amount) VALUES (:idUser, :idArticle, :bidDate, :bidAmount);";
+    private static final String FIND_ONE_BID = "SELECT * FROM BID INNER JOIN ARTICLES ON BID.id_article = ARTICLES.id_article INNER JOIN USERS ON BID.id_user = USERS.id_user WHERE BID.id_article = :idArticle;";
+    private static final String FIND_ALL_BID = "SELECT * FROM BID;";
 
     public BidDAOSQLImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -32,16 +37,15 @@ public class BidDAOSQLImpl implements BidDAOInterface {
 
     @Override
     public void addBid(Article article) {
-        User user = this.utilisateurDAO.findById(article.getUtilisateur().getNoUtilisateur());
-        Article findArticle = this.articleDAO.find(article.getNoArticle());
+        User user = this.userDAOInterface.readUserById(article.getUser().getIdUser());
+
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("utilisateur", utilisateur.getNoUtilisateur())
-                .addValue("noArticle", article.getNoArticle())
-                .addValue("dateDebutEncheres", findArticle.getDateDebutEncheres())
-                .addValue("miseAPrix", findArticle.getPrixInitial());
+                .addValue("utilisateur", user.getIdUser())
+                .addValue("noArticle", article.getIdArticle());
 
-        namedParameterJdbcTemplate.update(sql, namedParameters);
+
+        namedParameterJdbcTemplate.update(ADD_BID, namedParameters);
     }
 
     @Override
