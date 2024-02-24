@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import jdk.jfr.Category;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +19,11 @@ public class Article {
     private String articleName;
     @NotBlank
     @Size(min=4, max = 300)
-    private String desciption;
+    private String description;
     @DateTimeFormat(pattern = "dd-mm-yyyy")
-    private LocalDate bidStartDay;
+    private Date bidStartDay;
     @DateTimeFormat(pattern = "dd-mm-yyyy")
-    private LocalDate bidEndDay;
+    private Date bidEndDay;
     @NotBlank
     @Min(value = 10)
     @Max(value = 600)
@@ -39,10 +40,10 @@ public class Article {
     public Article() {
     }
 
-    public Article(Long idArticle, String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
+    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
         this.idArticle = idArticle;
         this.articleName = articleName;
-        this.desciption = desciption;
+        this.description = description;
         this.bidStartDay = bidStartDay;
         this.bidEndDay = bidEndDay;
         this.startingPrice = startingPrice;
@@ -50,9 +51,9 @@ public class Article {
         this.sellingStatus = sellingStatus;
     }
 
-    public Article(String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
+    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
         this.articleName = articleName;
-        this.desciption = desciption;
+        this.description = description;
         this.bidStartDay = bidStartDay;
         this.bidEndDay = bidEndDay;
         this.startingPrice = startingPrice;
@@ -60,10 +61,10 @@ public class Article {
         this.sellingStatus = sellingStatus;
     }
 
-    public Article(Long idArticle, String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
+    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
         this.idArticle = idArticle;
         this.articleName = articleName;
-        this.desciption = desciption;
+        this.description = description;
         this.bidStartDay = bidStartDay;
         this.bidEndDay = bidEndDay;
         this.startingPrice = startingPrice;
@@ -75,9 +76,9 @@ public class Article {
         this.currentBid = currentBid;
     }
 
-    public Article(String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
+    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
         this.articleName = articleName;
-        this.desciption = desciption;
+        this.description = description;
         this.bidStartDay = bidStartDay;
         this.bidEndDay = bidEndDay;
         this.startingPrice = startingPrice;
@@ -105,27 +106,27 @@ public class Article {
         this.articleName = articleName;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String desciption) {
+        this.description = desciption;
     }
 
-    public LocalDate getBidStartDay() {
+    public Date getBidStartDay() {
         return bidStartDay;
     }
 
-    public void setBidStartDay(LocalDate bidStartDay) {
+    public void setBidStartDay(Date bidStartDay) {
         this.bidStartDay = bidStartDay;
     }
 
-    public LocalDate getBidEndDay() {
+    public Date getBidEndDay() {
         return bidEndDay;
     }
 
-    public void setBidEndDay(LocalDate bidEndDay) {
+    public void setBidEndDay(Date bidEndDay) {
         this.bidEndDay = bidEndDay;
     }
 
@@ -190,7 +191,7 @@ public class Article {
         return "Article{" +
                 "idArticle=" + idArticle +
                 ", articleName='" + articleName + '\'' +
-                ", desciption='" + desciption + '\'' +
+                ", description='" + description + '\'' +
                 ", bidStartDay=" + bidStartDay +
                 ", bidEndDay=" + bidEndDay +
                 ", startingPrice=" + startingPrice +
