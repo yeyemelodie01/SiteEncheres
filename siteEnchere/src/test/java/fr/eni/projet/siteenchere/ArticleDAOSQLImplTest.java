@@ -20,13 +20,25 @@ class ArticleDAOSQLImplTest {
     @Test
     @Transactional
     void createArticleTest() {
-        Article article = new Article( "test", "test", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 10, 10, "test");
+        Article article = new Article( "test", "test", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 10, 1L, 1L);
         System.out.println(article);
         Long id = articleDAOSQLImpl.createArticle(article);
         System.out.println(id);
         assert(id != null);
-        //assert(articleDAOSQLImpl.readArticleById(id) != null);
-        assert(!id.equals(article.getIdArticle()));
+        assert(articleDAOSQLImpl.readArticleById(id).equals(article));
+        assert(id.equals(article.getIdArticle()));
+    }
+
+    @Test
+    @Transactional
+    void readArticleByIdTest() {
+        Article article = articleDAOSQLImpl.readArticleById(14L); //Renvoi
+        if (article.getIdArticle() == null) {
+            String description = article.getDescription();
+            assert(description.equals("Article not found"));
+        } else {
+            assert (article.getIdArticle() == 1L);
+        }
     }
 
 }

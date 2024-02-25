@@ -4,16 +4,14 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.Category;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Article {
-    private Long idArticle;
+    private Long idArticle = null;
     @NotBlank
     @Size(min=4, max = 30)
     private String articleName;
@@ -32,15 +30,37 @@ public class Article {
     @NotBlank
     private Integer finalPrice;
     private String sellingStatus;
-    private User user;
-    private Category category;
+    private Long idUser;
+    private Long idCategory;
     private Withdrawal withdrawal;
     private List<Bid> currentBid = new ArrayList<>();
 
     public Article() {
     }
 
-    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
+    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, String sellingStatus) {
+        this.idArticle = idArticle;
+        this.articleName = articleName;
+        this.description = description;
+        this.bidStartDay = bidStartDay;
+        this.bidEndDay = bidEndDay;
+        this.startingPrice = startingPrice;
+        this.sellingStatus = sellingStatus;
+    }
+    //le constructeur à utiliser pour créer et récupérer un article en bdd
+    //les autres attribut doivent être initialisés a l'aide des setter dans la bll
+    //
+    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Long idUser, Long idCategory) {
+        this.articleName = articleName;
+        this.description = description;
+        this.bidStartDay = bidStartDay;
+        this.bidEndDay = bidEndDay;
+        this.startingPrice = startingPrice;
+        this.idUser = idUser;
+        this.idCategory = idCategory;
+    }
+
+    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, Long idUser, Long idCategory, Withdrawal withdrawal, List<Bid> currentBid) {
         this.idArticle = idArticle;
         this.articleName = articleName;
         this.description = description;
@@ -49,34 +69,13 @@ public class Article {
         this.startingPrice = startingPrice;
         this.finalPrice = finalPrice;
         this.sellingStatus = sellingStatus;
-    }
-
-    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
-        this.articleName = articleName;
-        this.description = description;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-    }
-
-    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
-        this.idArticle = idArticle;
-        this.articleName = articleName;
-        this.description = description;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-        this.user = user;
-        this.category = category;
+        this.idUser = idUser;
+        this.idCategory = idCategory;
         this.withdrawal = withdrawal;
         this.currentBid = currentBid;
     }
 
-    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
+    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, Long idUser, Long idCategory, Withdrawal withdrawal, List<Bid> currentBid) {
         this.articleName = articleName;
         this.description = description;
         this.bidStartDay = bidStartDay;
@@ -84,8 +83,8 @@ public class Article {
         this.startingPrice = startingPrice;
         this.finalPrice = finalPrice;
         this.sellingStatus = sellingStatus;
-        this.user = user;
-        this.category = category;
+        this.idUser = idUser;
+        this.idCategory = idCategory;
         this.withdrawal = withdrawal;
         this.currentBid = currentBid;
     }
@@ -154,20 +153,20 @@ public class Article {
         this.sellingStatus = sellingStatus;
     }
 
-    public User getUser() {
-        return user;
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setIdCategory(Long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public Withdrawal getWithdrawal() {
@@ -197,8 +196,8 @@ public class Article {
                 ", startingPrice=" + startingPrice +
                 ", finalPrice=" + finalPrice +
                 ", sellingStatus='" + sellingStatus + '\'' +
-                ", user=" + user +
-                ", category=" + category +
+                ", user=" + idUser +
+                ", category=" + idCategory +
                 ", withdrawal=" + withdrawal +
                 ", currentBid=" + currentBid +
                 '}';
