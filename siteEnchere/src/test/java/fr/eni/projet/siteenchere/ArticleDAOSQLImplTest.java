@@ -23,7 +23,7 @@ class ArticleDAOSQLImplTest {
         Article article = new Article( "test", "test", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 10, 1L, 1L);
         System.out.println(article);
         Long id = articleDAOSQLImpl.createArticle(article);
-        System.out.println(id);
+        System.out.println("id =" + id);
         assert(id != null);
         assert(articleDAOSQLImpl.readArticleById(id).equals(article));
         assert(id.equals(article.getIdArticle()));

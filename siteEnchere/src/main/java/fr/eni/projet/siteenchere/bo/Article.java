@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Article {
     private Long idArticle = null;
@@ -201,5 +202,18 @@ public class Article {
                 ", withdrawal=" + withdrawal +
                 ", currentBid=" + currentBid +
                 '}';
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(idCategory, article.idCategory) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBid, article.currentBid);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, idCategory, withdrawal, currentBid);
     }
 }

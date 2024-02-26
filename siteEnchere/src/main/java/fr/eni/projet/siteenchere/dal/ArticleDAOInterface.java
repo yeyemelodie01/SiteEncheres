@@ -11,7 +11,7 @@ public interface ArticleDAOInterface {
 
     List<Article> getArticlesByUser(Long idUser);
 
-    void updateArticle(Long idUser);
+    void updateArticle(Article article);
 
     void deleteArticle(Long idArticle);
 }
