@@ -37,7 +37,7 @@ public class BidDAOSQLImpl implements BidDAOInterface {
 
     @Override
     public void addBid(Article article) {
-        User user = this.userDAOInterface.readUserById(article.getUser().getIdUser());
+        User user = this.userDAOInterface.readUserById(article.getIdUser());
 
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource()
