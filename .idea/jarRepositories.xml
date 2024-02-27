@@ -16,10 +16,5 @@
       <option name="name" value="MavenRepo" />
       <option name="url" value="https://repo.maven.apache.org/maven2/" />
     </remote-repository>
-    <remote-repository>
-      <option name="id" value="nexus_jcenter" />
-      <option name="name" value="nexus_jcenter" />
-      <option name="url" value="http://nexus.depot-eni.fr:8081/repository/jcenter/" />
-    </remote-repository>
   </component>
 </project>
