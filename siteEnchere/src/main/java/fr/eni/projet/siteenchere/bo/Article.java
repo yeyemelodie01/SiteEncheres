@@ -4,25 +4,25 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import jdk.jfr.Category;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Article {
-    private Long idArticle;
+    private Long idArticle = null;
     @NotBlank
     @Size(min=4, max = 30)
     private String articleName;
     @NotBlank
     @Size(min=4, max = 300)
-    private String desciption;
+    private String description;
     @DateTimeFormat(pattern = "dd-mm-yyyy")
-    private LocalDate bidStartDay;
+    private Date bidStartDay;
     @DateTimeFormat(pattern = "dd-mm-yyyy")
-    private LocalDate bidEndDay;
+    private Date bidEndDay;
     @NotBlank
     @Min(value = 10)
     @Max(value = 600)
@@ -31,64 +31,28 @@ public class Article {
     @NotBlank
     private Integer finalPrice;
     private String sellingStatus;
-    private User user;
-    private Category category;
+    private Long idUser;
+    private Long idCategory;
     private Withdrawal withdrawal;
     private List<Bid> currentBid = new ArrayList<>();
 
     public Article() {
     }
-
-    public Article(Long idArticle, String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
-        this.idArticle = idArticle;
+    
+    //le constructeur à utiliser pour créer et récupérer un article en bdd
+    //les autres attribut doivent être initialisés a l'aide des setter dans la bll
+    //
+    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Long idUser, Long idCategory) {
         this.articleName = articleName;
-        this.desciption = desciption;
+        this.description = description;
         this.bidStartDay = bidStartDay;
         this.bidEndDay = bidEndDay;
         this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
+        this.idUser = idUser;
+        this.idCategory = idCategory;
     }
-
-    public Article(String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus) {
-        this.articleName = articleName;
-        this.desciption = desciption;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-    }
-
-    public Article(Long idArticle, String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
-        this.idArticle = idArticle;
-        this.articleName = articleName;
-        this.desciption = desciption;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-        this.user = user;
-        this.category = category;
-        this.withdrawal = withdrawal;
-        this.currentBid = currentBid;
-    }
-
-    public Article(String articleName, String desciption, LocalDate bidStartDay, LocalDate bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, User user, Category category, Withdrawal withdrawal, List<Bid> currentBid) {
-        this.articleName = articleName;
-        this.desciption = desciption;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-        this.user = user;
-        this.category = category;
-        this.withdrawal = withdrawal;
-        this.currentBid = currentBid;
-    }
-
+    
+    
     public Long getIdArticle() {
         return idArticle;
     }
@@ -105,27 +69,27 @@ public class Article {
         this.articleName = articleName;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String desciption) {
+        this.description = desciption;
     }
 
-    public LocalDate getBidStartDay() {
+    public Date getBidStartDay() {
         return bidStartDay;
     }
 
-    public void setBidStartDay(LocalDate bidStartDay) {
+    public void setBidStartDay(Date bidStartDay) {
         this.bidStartDay = bidStartDay;
     }
 
-    public LocalDate getBidEndDay() {
+    public Date getBidEndDay() {
         return bidEndDay;
     }
 
-    public void setBidEndDay(LocalDate bidEndDay) {
+    public void setBidEndDay(Date bidEndDay) {
         this.bidEndDay = bidEndDay;
     }
 
@@ -153,20 +117,20 @@ public class Article {
         this.sellingStatus = sellingStatus;
     }
 
-    public User getUser() {
-        return user;
+    public Long getIdUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
     }
 
-    public Category getCategory() {
-        return category;
+    public Long getIdCategory() {
+        return idCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setIdCategory(Long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public Withdrawal getWithdrawal() {
@@ -190,16 +154,29 @@ public class Article {
         return "Article{" +
                 "idArticle=" + idArticle +
                 ", articleName='" + articleName + '\'' +
-                ", desciption='" + desciption + '\'' +
+                ", description='" + description + '\'' +
                 ", bidStartDay=" + bidStartDay +
                 ", bidEndDay=" + bidEndDay +
                 ", startingPrice=" + startingPrice +
                 ", finalPrice=" + finalPrice +
                 ", sellingStatus='" + sellingStatus + '\'' +
-                ", user=" + user +
-                ", category=" + category +
+                ", user=" + idUser +
+                ", category=" + idCategory +
                 ", withdrawal=" + withdrawal +
                 ", currentBid=" + currentBid +
                 '}';
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Article article = (Article) o;
+        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(idCategory, article.idCategory) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBid, article.currentBid);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, idCategory, withdrawal, currentBid);
     }
 }
