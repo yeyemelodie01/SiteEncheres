@@ -72,6 +72,8 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
    *
    * @param idArticle the ID of the article to be read
    *
+   * @throws DataAccessException if an error occurs while reading the article
+   *
    * @return the article with the specified ID, or a default article if not found
    */
   @Override
@@ -92,6 +94,8 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
    *
    * @param idUser the ID of the user
    *
+   * @throws DataAccessException if an error occurs while retrieving the articles
+   *
    * @return a list of articles associated with the specified user or an empty list if none
    */
   @Override
@@ -106,7 +110,14 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
       return Collections.emptyList();
     }
   }
-  // pas testé
+  
+  /**
+   * Update an article in the database.
+   *
+   * @param article the article to be updated
+   *
+   * @throws DataAccessException if an error occurs while updating the article
+   */
   @Override
   public void updateArticle(Article article) {
     try {
@@ -130,8 +141,21 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
     
   }
   
+  /**
+   * Deletes an article from the database.
+   *
+   * @param idArticle the ID of the article to be deleted
+   *
+   * @throws DataAccessException if an error occurs while deleting the article
+   */
+  
   @Override
   public void deleteArticle(Long idArticle) {
-  
+    try {
+      namedParameterJdbcTemplate.update("DELETE FROM `auction`.`articles` WHERE id_article = :idArticle",
+          new MapSqlParameterSource("idArticle", idArticle));
+    } catch (DataAccessException e) {
+      System.out.println(e.getMessage());
+    }
   }
 }

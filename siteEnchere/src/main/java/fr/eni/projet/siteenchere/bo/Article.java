@@ -38,16 +38,7 @@ public class Article {
 
     public Article() {
     }
-
-    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, String sellingStatus) {
-        this.idArticle = idArticle;
-        this.articleName = articleName;
-        this.description = description;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.sellingStatus = sellingStatus;
-    }
+    
     //le constructeur à utiliser pour créer et récupérer un article en bdd
     //les autres attribut doivent être initialisés a l'aide des setter dans la bll
     //
@@ -60,36 +51,8 @@ public class Article {
         this.idUser = idUser;
         this.idCategory = idCategory;
     }
-
-    public Article(Long idArticle, String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, Long idUser, Long idCategory, Withdrawal withdrawal, List<Bid> currentBid) {
-        this.idArticle = idArticle;
-        this.articleName = articleName;
-        this.description = description;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-        this.idUser = idUser;
-        this.idCategory = idCategory;
-        this.withdrawal = withdrawal;
-        this.currentBid = currentBid;
-    }
-
-    public Article(String articleName, String description, Date bidStartDay, Date bidEndDay, Integer startingPrice, Integer finalPrice, String sellingStatus, Long idUser, Long idCategory, Withdrawal withdrawal, List<Bid> currentBid) {
-        this.articleName = articleName;
-        this.description = description;
-        this.bidStartDay = bidStartDay;
-        this.bidEndDay = bidEndDay;
-        this.startingPrice = startingPrice;
-        this.finalPrice = finalPrice;
-        this.sellingStatus = sellingStatus;
-        this.idUser = idUser;
-        this.idCategory = idCategory;
-        this.withdrawal = withdrawal;
-        this.currentBid = currentBid;
-    }
-
+    
+    
     public Long getIdArticle() {
         return idArticle;
     }

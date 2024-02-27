@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @SpringBootTest
 class ArticleDAOSQLImplTest {
@@ -28,6 +29,14 @@ class ArticleDAOSQLImplTest {
         assert(articleDAOSQLImpl.readArticleById(id).equals(article));
         assert(id.equals(article.getIdArticle()));
     }
+    
+    @Test
+    @Transactional
+    void getArticlesByUserTest() {
+        List<Article> articles = articleDAOSQLImpl.getArticlesByUser(1L);
+        assert(!articles.isEmpty());
+    }
+    
 
     @Test
     @Transactional
@@ -39,6 +48,22 @@ class ArticleDAOSQLImplTest {
         } else {
             assert (article.getIdArticle() == 1L);
         }
+    }
+    
+    @Test
+    @Transactional
+    void updateArticleTest() {
+        Article article = articleDAOSQLImpl.readArticleById(1L);
+        article.setDescription("Updated");
+        articleDAOSQLImpl.updateArticle(article);
+        assert(articleDAOSQLImpl.readArticleById(1L).getDescription().equals("Updated"));
+    }
+    
+    @Test
+    @Transactional
+    void deleteArticleTest() {
+        articleDAOSQLImpl.deleteArticle(1L);
+        assert(articleDAOSQLImpl.readArticleById(1L).getDescription().equals("Article not found"));
     }
 
 }
