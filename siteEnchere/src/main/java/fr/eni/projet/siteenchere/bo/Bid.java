@@ -1,10 +1,11 @@
 package fr.eni.projet.siteenchere.bo;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 public class Bid {
-    private LocalDate bidDate;
-    private LocalDate bidAmount;
+    private Date bidDate;
+    private Integer bidAmount;
     //private Long idArticle;
     private User user;
     private Article article;
@@ -12,31 +13,31 @@ public class Bid {
     public Bid() {
     }
 
-    public Bid(LocalDate bidDate, LocalDate bidAmount) {
+    public Bid(Date bidDate, Integer bidAmount) {
         this.bidDate = bidDate;
         this.bidAmount = bidAmount;
     }
 
-    public Bid(LocalDate bidDate, LocalDate bidAmount, Article article, User user) {
+    public Bid(Date bidDate, Integer bidAmount, Article article, User user) {
         this.bidDate = bidDate;
         this.bidAmount = bidAmount;
         this.article = article;
         this.user = user;
     }
 
-    public LocalDate getBidDate() {
+    public Date getBidDate() {
         return bidDate;
     }
 
-    public void setBidDate(LocalDate bidDate) {
+    public void setBidDate(Date bidDate) {
         this.bidDate = bidDate;
     }
 
-    public LocalDate getBidAmount() {
+    public Integer getBidAmount() {
         return bidAmount;
     }
 
-    public void setBidAmount(LocalDate bidAmount) {
+    public void setBidAmount(Integer bidAmount) {
         this.bidAmount = bidAmount;
     }
 
