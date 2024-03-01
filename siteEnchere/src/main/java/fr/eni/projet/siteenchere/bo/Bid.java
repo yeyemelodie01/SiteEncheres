@@ -5,8 +5,9 @@ import java.time.LocalDate;
 public class Bid {
     private LocalDate bidDate;
     private LocalDate bidAmount;
-    private Article article;
+    //private Long idArticle;
     private User user;
+    private Article article;
 
     public Bid() {
     }

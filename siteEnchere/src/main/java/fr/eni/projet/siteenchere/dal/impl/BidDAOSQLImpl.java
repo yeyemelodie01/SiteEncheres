@@ -5,26 +5,22 @@ import fr.eni.projet.siteenchere.bo.Bid;
 import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.dal.BidDAOInterface;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Repository
 public class BidDAOSQLImpl implements BidDAOInterface {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-    UserDAOInterface userDAOInterface;
-
-    public BidDAOSQLImpl(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, UserDAOInterface userDAOInterface) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
-        this.userDAOInterface = userDAOInterface;
-    }
 
     private static final String ADD_BID = "INSERT INTO BID (id_user, id_article, bid_date, bid_amount) VALUES (:idUser, :idArticle, :bidDate, :bidAmount);";
     private static final String FIND_ONE_BID = "SELECT * FROM BID INNER JOIN ARTICLES ON BID.id_article = ARTICLES.id_article INNER JOIN USERS ON BID.id_user = USERS.id_user WHERE BID.id_article = :idArticle;";
@@ -36,16 +32,8 @@ public class BidDAOSQLImpl implements BidDAOInterface {
     }
 
     @Override
-    public void addBid(Article article) {
-        User user = this.userDAOInterface.readUserById(article.getIdUser());
-
-
-        MapSqlParameterSource namedParameters = new MapSqlParameterSource()
-                .addValue("utilisateur", user.getIdUser())
-                .addValue("noArticle", article.getIdArticle());
-
-
-        namedParameterJdbcTemplate.update(ADD_BID, namedParameters);
+    public void addBid(Bid bid) {
+    
     }
 
     @Override

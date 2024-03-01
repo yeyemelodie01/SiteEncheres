@@ -8,9 +8,12 @@ import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
+
+@Repository
 
 public class UserDAOSQLImpl implements UserDAOInterface {
-    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String CREATE_USER = "INSERT INTO USERS(pseudo, lastname, firstname, email, phone, road_name, postal_code, city, password, credit, admin)"
             + " VALUES (:pseudo, :lastname, :firstname, :email, :phone, :roadName, :postalCode, :town, :password, 200, false);";
