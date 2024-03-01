@@ -37,7 +37,7 @@ public class Article {
     private Long idCategory;
     private Category category;
     private Withdrawal withdrawal;
-    private List<Bid> currentBid = new ArrayList<>();
+    private List<Bid> currentBidList = new ArrayList<>();
 
     public Article() {
     }
@@ -144,12 +144,16 @@ public class Article {
         this.withdrawal = withdrawal;
     }
 
-    public List<Bid> getCurrentBid() {
-        return currentBid;
+    public List<Bid> getCurrentBidList() {
+        return currentBidList;
     }
 
-    public void setCurrentBid(List<Bid> currentBid) {
-        this.currentBid = currentBid;
+    public void setCurrentBidList(List<Bid> currentBidList) {
+        this.currentBidList = currentBidList;
+    }
+
+    public void addBid(Bid bid) {
+        currentBidList.add(bid);
     }
     
     public User getUser() {
@@ -173,12 +177,12 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(user, article.user) && Objects.equals(idCategory, article.idCategory) && Objects.equals(category, article.category) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBid, article.currentBid);
+        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(user, article.user) && Objects.equals(idCategory, article.idCategory) && Objects.equals(category, article.category) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBidList, article.currentBidList);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, user, idCategory, category, withdrawal, currentBid);
+        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, user, idCategory, category, withdrawal, currentBidList);
     }
     
     @Override
@@ -197,7 +201,7 @@ public class Article {
             ", idCategory=" + idCategory +
             ", category=" + category +
             ", withdrawal=" + withdrawal +
-            ", currentBid=" + currentBid +
+            ", currentBid=" + currentBidList +
             '}';
     }
 }
