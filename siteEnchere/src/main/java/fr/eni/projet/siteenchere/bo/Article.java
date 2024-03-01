@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 public class Article {
     private Long idArticle = null;
     @NotBlank
@@ -32,7 +33,9 @@ public class Article {
     private Integer finalPrice;
     private String sellingStatus;
     private Long idUser;
+    private User user;
     private Long idCategory;
+    private Category category;
     private Withdrawal withdrawal;
     private List<Bid> currentBid = new ArrayList<>();
 
@@ -148,23 +151,21 @@ public class Article {
     public void setCurrentBid(List<Bid> currentBid) {
         this.currentBid = currentBid;
     }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "idArticle=" + idArticle +
-                ", articleName='" + articleName + '\'' +
-                ", description='" + description + '\'' +
-                ", bidStartDay=" + bidStartDay +
-                ", bidEndDay=" + bidEndDay +
-                ", startingPrice=" + startingPrice +
-                ", finalPrice=" + finalPrice +
-                ", sellingStatus='" + sellingStatus + '\'' +
-                ", user=" + idUser +
-                ", category=" + idCategory +
-                ", withdrawal=" + withdrawal +
-                ", currentBid=" + currentBid +
-                '}';
+    
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
+    public Category getCategory() {
+        return category;
+    }
+    
+    public void setCategory(Category category) {
+        this.category = category;
     }
     
     @Override
@@ -172,11 +173,31 @@ public class Article {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Article article = (Article) o;
-        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(idCategory, article.idCategory) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBid, article.currentBid);
+        return Objects.equals(idArticle, article.idArticle) && Objects.equals(articleName, article.articleName) && Objects.equals(description, article.description) && Objects.equals(bidStartDay, article.bidStartDay) && Objects.equals(bidEndDay, article.bidEndDay) && Objects.equals(startingPrice, article.startingPrice) && Objects.equals(finalPrice, article.finalPrice) && Objects.equals(sellingStatus, article.sellingStatus) && Objects.equals(idUser, article.idUser) && Objects.equals(user, article.user) && Objects.equals(idCategory, article.idCategory) && Objects.equals(category, article.category) && Objects.equals(withdrawal, article.withdrawal) && Objects.equals(currentBid, article.currentBid);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, idCategory, withdrawal, currentBid);
+        return Objects.hash(idArticle, articleName, description, bidStartDay, bidEndDay, startingPrice, finalPrice, sellingStatus, idUser, user, idCategory, category, withdrawal, currentBid);
+    }
+    
+    @Override
+    public String toString() {
+        return "Article{" +
+            "idArticle=" + idArticle +
+            ", articleName='" + articleName + '\'' +
+            ", description='" + description + '\'' +
+            ", bidStartDay=" + bidStartDay +
+            ", bidEndDay=" + bidEndDay +
+            ", startingPrice=" + startingPrice +
+            ", finalPrice=" + finalPrice +
+            ", sellingStatus='" + sellingStatus + '\'' +
+            ", idUser=" + idUser +
+            ", user=" + user +
+            ", idCategory=" + idCategory +
+            ", category=" + category +
+            ", withdrawal=" + withdrawal +
+            ", currentBid=" + currentBid +
+            '}';
     }
 }

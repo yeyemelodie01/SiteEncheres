@@ -37,6 +37,17 @@ class ArticleDAOSQLImplTest {
         assert(!articles.isEmpty());
     }
     
+    @Test
+    @Transactional
+    void getArticlesByCategoryTest() {
+        List<Article> articles = articleDAOSQLImpl.getArticleByCategories(1L);
+        for (Article article : articles) {
+            System.out.println(article);
+        }
+        assert(!articles.isEmpty());
+    }
+    
+    
 
     @Test
     @Transactional

@@ -1,6 +1,9 @@
 package fr.eni.projet.siteenchere.dal.impl;
 
 import fr.eni.projet.siteenchere.bo.Article;
+import fr.eni.projet.siteenchere.bo.Category;
+import fr.eni.projet.siteenchere.bo.User;
+import fr.eni.projet.siteenchere.bo.Withdrawal;
 import fr.eni.projet.siteenchere.dal.ArticleDAOInterface;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -18,24 +21,26 @@ import java.util.List;
 @Repository
 public class ArticleDAOSQLImpl implements ArticleDAOInterface {
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+  
   final JdbcTemplate jdbcTemplate;
   
-  private final String CREATE_REQUEST = " INSERT INTO `auction`.`articles` " +
-      "(article_name, description, bid_start_day, bid_end_day, starting_price, id_user, id_category) " +
-      "values (:articleName, :description, :bidStartDay, :bidEndDay, :startingPrice, :idUser, :idCategory)";
+  private final String CREATE_REQUEST = " INSERT INTO `auction`.`articles` " + "(article_name, description, " +
+      "bid_start_day, bid_end_day, starting_price, id_user, id_category) " + "values (:articleName, :description, " + ":bidStartDay, :bidEndDay, :startingPrice, :idUser, :idCategory)";
   private final String READ_ID_REQUEST = "SELECT * FROM `auction`.`articles` WHERE id_article = :idArticle";
   
   private final String READ_USER_REQUEST = "SELECT * FROM `auction`.`articles` WHERE id_user = :idUser";
   
-  private final String UPDATE_REQUEST = "UPDATE `auction`.`articles` " +
-      "SET article_name = :articleName, " +
-      "description = :description, " +
-      "bid_start_day = :bidStartDay, " +
-      "bid_end_day = :bidEndDay, " +
-      "starting_price = :startingPrice, " +
-      "id_user = :idUser, " +
-      "id_category = :idCategory " +
-      "WHERE id_article = :idArticle";
+  private final String UPDATE_REQUEST = "UPDATE `auction`.`articles` " + "SET article_name = :articleName, " +
+      "description = :description, " + "bid_start_day = :bidStartDay, " + "bid_end_day = :bidEndDay, " +
+      "starting_price = :startingPrice, " + "id_user = :idUser, " + "id_category = :idCategory " + "WHERE id_article "
+      + "= :idArticle";
+  
+  private final String GET_BY_CATEGORY_REQUEST = "SELECT * FROM articles " +
+      "INNER JOIN category  ON articles.id_category = category.id_category " +
+      "INNER JOIN users ON articles.id_user" + "= users.id_user " +
+      "INNER JOIN withdrawal  ON articles.id_article = withdrawal.id_article " +
+      "INNER JOIN bid ON articles.id_article = bid.id_article " +
+      "WHERE articles.id_category = :idCategory;";
   
   public ArticleDAOSQLImpl(NamedParameterJdbcTemplate namedParameterJdbcTemplate, JdbcTemplate jdbcTemplate) {
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
@@ -72,9 +77,9 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
    *
    * @param idArticle the ID of the article to be read
    *
-   * @throws DataAccessException if an error occurs while reading the article
-   *
    * @return the article with the specified ID, or a default article if not found
+   *
+   * @throws DataAccessException if an error occurs while reading the article
    */
   @Override
   public Article readArticleById(Long idArticle) {
@@ -94,18 +99,64 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
    *
    * @param idUser the ID of the user
    *
-   * @throws DataAccessException if an error occurs while retrieving the articles
-   *
    * @return a list of articles associated with the specified user or an empty list if none
+   *
+   * @throws DataAccessException if an error occurs while retrieving the articles
    */
   @Override
   public List<Article> getArticlesByUser(Long idUser) {
     try {
-      return namedParameterJdbcTemplate.query(
-          READ_USER_REQUEST,
-          new MapSqlParameterSource("idUser", idUser),
-          new BeanPropertyRowMapper<>(Article.class)
-      );
+      return namedParameterJdbcTemplate.query(READ_USER_REQUEST, new MapSqlParameterSource("idUser", idUser),
+          new BeanPropertyRowMapper<>(Article.class));
+    } catch (EmptyResultDataAccessException e) {
+      return Collections.emptyList();
+    }
+  }
+  
+  public List<Article> getArticleByCategories(Long idCategory) {
+  
+   try {
+//      List<Article> articles = jdbcTemplate.query(GET_BY_CATEGORY_REQUEST, new BeanPropertyRowMapper<>(Article.class), idCategory);
+//
+//    } catch (EmptyResultDataAccessException e) {
+//      return Collections.emptyList();
+//    }
+     
+     
+     
+      return namedParameterJdbcTemplate.query(GET_BY_CATEGORY_REQUEST, new MapSqlParameterSource("idCategory", idCategory), (resulSet, rowNum) -> {
+
+        Category category = new Category();
+        category.setIdCategory(resulSet.getLong("id_category"));
+        category.setCatName(resulSet.getString("cat_name"));
+
+        Withdrawal withdrawal = new Withdrawal();
+        withdrawal.setRoadName(resulSet.getString("road_name"));
+        withdrawal.setCity(resulSet.getString("city"));
+        withdrawal.setPostalCode(resulSet.getString("postal_code"));
+
+        User user = new User();
+        user.setIdUser(resulSet.getLong("id_user"));
+        user.setFirstName(resulSet.getString("firstname"));
+        user.setLastName(resulSet.getString("lastname"));
+        user.setWithdrawal(withdrawal);
+
+        Article article = new Article();
+        article.setIdArticle(resulSet.getLong("id_article"));
+        article.setArticleName(resulSet.getString("article_name"));
+        article.setDescription(resulSet.getString("description"));
+        article.setStartingPrice(resulSet.getInt("starting_price"));
+        article.setBidStartDay(resulSet.getDate("bid_start_day"));
+        article.setBidEndDay(resulSet.getDate("bid_end_day"));
+        article.setIdUser(user.getIdUser());
+        article.setUser(user);
+        article.setIdCategory(category.getIdCategory());
+        article.setCategory(category);
+        article.setWithdrawal(withdrawal);
+
+        return article;
+      });
+
     } catch (EmptyResultDataAccessException e) {
       return Collections.emptyList();
     }
@@ -123,8 +174,7 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
     try {
       Article oldArticle = readArticleById(article.getIdArticle());
       if (oldArticle.getIdArticle() == null) {
-        String description = oldArticle.getDescription();
-        assert (description.equals("Article not found"));
+        throw new EmptyResultDataAccessException("Article not found", 1);
       } else {
         if (!article.equals(oldArticle)) {
           try {

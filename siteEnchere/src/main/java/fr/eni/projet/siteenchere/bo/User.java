@@ -35,6 +35,7 @@ public class User {
     @NotBlank
     @Size(min=4, max = 30)
     private String password;
+    private Withdrawal withdrawal;
     private final static Long credit = 120L;
     @AssertFalse
     private boolean admin;
@@ -74,7 +75,15 @@ public class User {
         this.password = password;
         this.admin = admin;
     }
-
+    
+    public Withdrawal getWithdrawal() {
+        return withdrawal;
+    }
+    
+    public void setWithdrawal(Withdrawal withdrawal) {
+        this.withdrawal = withdrawal;
+    }
+    
     public Long getIdUser() {
         return idUser;
     }

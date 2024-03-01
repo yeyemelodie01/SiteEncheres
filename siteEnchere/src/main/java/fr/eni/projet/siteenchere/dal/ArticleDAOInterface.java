@@ -10,6 +10,8 @@ public interface ArticleDAOInterface {
     Article readArticleById(Long idArticle);
 
     List<Article> getArticlesByUser(Long idUser);
+    
+    List<Article> getArticleByCategories(Long idCategory);
 
     void updateArticle(Article article);
 
