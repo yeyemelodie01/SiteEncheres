@@ -1,5 +1,6 @@
 package fr.eni.projet.siteenchere.bll.impl;
 
+import fr.eni.projet.siteenchere.bll.ArticleService;
 import fr.eni.projet.siteenchere.bo.Article;
 import fr.eni.projet.siteenchere.dal.ArticleDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ArticleServiceImpl implements ArticleDAOInterface {
+public class ArticleServiceImpl implements ArticleService {
     
     @Autowired
     private ArticleDAOInterface articleDAOInterface;

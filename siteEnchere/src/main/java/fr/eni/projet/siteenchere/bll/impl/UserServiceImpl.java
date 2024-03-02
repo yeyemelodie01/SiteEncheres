@@ -1,13 +1,13 @@
 package fr.eni.projet.siteenchere.bll.impl;
 
-import fr.eni.projet.siteenchere.bll.UserServiceInterface;
+import fr.eni.projet.siteenchere.bll.UserService;
 import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserServiceInterface {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAOInterface userDAOInterface;
