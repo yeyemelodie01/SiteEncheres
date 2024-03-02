@@ -4,7 +4,7 @@ import fr.eni.projet.siteenchere.bo.Article;
 import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.bo.Withdrawal;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
-import fr.eni.projet.siteenchere.dal.WithDrawalInterface;
+import fr.eni.projet.siteenchere.dal.WithDrawalDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Profile("sql")
-public class WithDrawalDAOSQLImpl implements WithDrawalInterface {
+public class WithDrawalDAOSQLImpl implements WithDrawalDAOInterface {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

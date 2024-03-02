@@ -6,6 +6,7 @@ import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.dal.BidDAOInterface;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Repository
+@Profile("sql")
 public class BidDAOSQLImpl implements BidDAOInterface {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;

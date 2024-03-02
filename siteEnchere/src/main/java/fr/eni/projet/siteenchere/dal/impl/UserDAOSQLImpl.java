@@ -2,6 +2,7 @@ package fr.eni.projet.siteenchere.dal.impl;
 
 import fr.eni.projet.siteenchere.bo.User;
 import fr.eni.projet.siteenchere.dal.UserDAOInterface;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -11,7 +12,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 @Repository
-
+@Profile("sql")
 public class UserDAOSQLImpl implements UserDAOInterface {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
@@ -66,9 +67,9 @@ public class UserDAOSQLImpl implements UserDAOInterface {
     }
 
     @Override
-    public User readUserByEmail(String email) {
+    public User readUserByEmail(String mailUser) {
         MapSqlParameterSource namedParameters = new MapSqlParameterSource();
-        namedParameters.addValue("email", email);
+        namedParameters.addValue("email", mailUser);
 
         return namedParameterJdbcTemplate.queryForObject(READ_USER_BY_EMAIL, namedParameters, new BeanPropertyRowMapper<>(User.class));
     }
