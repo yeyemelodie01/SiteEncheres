@@ -2,6 +2,7 @@ package fr.eni.projet.siteenchere.dal.impl;
 
 import fr.eni.projet.siteenchere.bo.*;
 import fr.eni.projet.siteenchere.dal.ArticleDAOInterface;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -17,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Repository
+@Profile("sql")
 public class ArticleDAOSQLImpl implements ArticleDAOInterface {
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
