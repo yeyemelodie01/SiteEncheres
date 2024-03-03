@@ -8,7 +8,7 @@ public class Bid {
     private Integer bidAmount;
     //private Long idArticle;
     private User user;
-    private Article article;
+    private Long idArticle;
 
     public Bid() {
     }
@@ -18,10 +18,10 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-    public Bid(Date bidDate, Integer bidAmount, Article article, User user) {
+    public Bid(Date bidDate, Integer bidAmount, Long idArticle, User user) {
         this.bidDate = bidDate;
         this.bidAmount = bidAmount;
-        this.article = article;
+        this.idArticle = idArticle;
         this.user = user;
     }
 
@@ -41,12 +41,12 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-    public Article getArticle() {
-        return article;
+    public Long getArticle() {
+        return idArticle;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setArticle(Long idArticle) {
+        this.idArticle = idArticle;
     }
 
     public User getUser() {
@@ -62,7 +62,7 @@ public class Bid {
         return "Bid{" +
                 "bidDate=" + bidDate +
                 ", bidAmount=" + bidAmount +
-                ", article=" + article +
+                ", article=" + idArticle +
                 ", user=" + user +
                 '}';
     }

@@ -25,18 +25,18 @@ public class User {
     private String phone;
     @NotBlank
     @Size(min=4, max = 30)
-    private String roadName;
+    private String personnalRoadName;
     @NotBlank
     @Size(min=5, max = 10)
-    private String postalCode;
+    private String personnalPostalCode;
     @NotBlank
     @Size(min=4, max = 30)
-    private String city;
+    private String personnalCity;
     @NotBlank
     @Size(min=4, max = 30)
     private String password;
     private Withdrawal withdrawal;
-    private final static Long credit = 120L;
+    private Long credit = 120L;
     @AssertFalse
     private boolean admin;
     private List<Article> salesList = new ArrayList<>();
@@ -53,9 +53,9 @@ public class User {
         this.firstName = firstName;
         this.email = email;
         this.phone = phone;
-        this.roadName = roadName;
-        this.postalCode = postalCode;
-        this.city = city;
+        this.personnalRoadName = roadName;
+        this.personnalPostalCode = postalCode;
+        this.personnalCity = city;
         this.password = password;
         this.admin = admin;
         this.salesList = salesList;
@@ -69,9 +69,9 @@ public class User {
         this.firstName = firstName;
         this.email = email;
         this.phone = phone;
-        this.roadName = roadName;
-        this.postalCode = postalCode;
-        this.city = city;
+        this.personnalRoadName = roadName;
+        this.personnalPostalCode = postalCode;
+        this.personnalCity = city;
         this.password = password;
         this.admin = admin;
     }
@@ -132,28 +132,28 @@ public class User {
         this.phone = phone;
     }
 
-    public String getRoadName() {
-        return roadName;
+    public String getPersonnalRoadName() {
+        return personnalRoadName;
     }
 
-    public void setRoadName(String roadName) {
-        this.roadName = roadName;
+    public void setPersonnalRoadName(String roadName) {
+        this.personnalRoadName = roadName;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getPersonnalPostalCode() {
+        return personnalPostalCode;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setPersonnalPostalCode(String postalCode) {
+        this.personnalPostalCode = postalCode;
     }
 
-    public String getCity() {
-        return city;
+    public String getPersonnalCity() {
+        return personnalCity;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setPersonnalCity(String city) {
+        this.personnalCity = city;
     }
 
     public String getPassword() {
@@ -170,6 +170,14 @@ public class User {
 
     public void setAdmin(boolean admin) {
         this.admin = admin;
+    }
+
+    public Long getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Long credit) {
+        this.credit = credit;
     }
 
     public List<Article> getSalesList() {
@@ -205,9 +213,9 @@ public class User {
                 ", firstName='" + firstName + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", roadName='" + roadName + '\'' +
-                ", postalCode='" + postalCode + '\'' +
-                ", city='" + city + '\'' +
+                ", roadName='" + personnalRoadName + '\'' +
+                ", postalCode='" + personnalPostalCode + '\'' +
+                ", city='" + personnalCity + '\'' +
                 ", password='" + password + '\'' +
                 ", admin=" + admin +
                 ", salesList=" + salesList +
