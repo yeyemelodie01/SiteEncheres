@@ -39,9 +39,9 @@ public class UserDAOSQLImpl implements UserDAOInterface {
                 .addValue("firstname", user.getFirstName())
                 .addValue("email", user.getEmail())
                 .addValue("phone", user.getPhone())
-                .addValue("roadName", user.getRoadName())
-                .addValue("postalCode", user.getPostalCode())
-                .addValue("town", user.getCity())
+                .addValue("roadName", user.getPersonnalRoadName())
+                .addValue("postalCode", user.getPersonnalPostalCode())
+                .addValue("town", user.getPersonnalCity())
                 .addValue("password", user.getPassword());
 
         namedParameterJdbcTemplate.update(CREATE_USER, namedParameters, keyHolder);

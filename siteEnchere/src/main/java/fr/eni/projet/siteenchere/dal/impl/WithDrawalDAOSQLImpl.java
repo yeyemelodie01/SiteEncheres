@@ -20,17 +20,17 @@ public class WithDrawalDAOSQLImpl implements WithDrawalDAOInterface {
 
     @Autowired
     private UserDAOInterface userDAOInterface;
-    private static final String ADD_WITHDRAWAL = "INSERT INTO WITHDRAWAL (id_article, road_name, postal_code, city) VALUES (:idArticle, :roadName, :postalCode, :city);";
-    private static final String FIND_WITHDRAWAL = "SELECT id_article, road_name, postal_code, city FROM WITHDRAWAL WHERE id_article = :idArticle;";
+    private final String ADD_WITHDRAWAL = "INSERT INTO withdrawal (id_article, road_name, postal_code, city) VALUES (:idArticle, :roadName, :postalCode, :city);";
+    private final String FIND_WITHDRAWAL = "SELECT id_article, road_name, postal_code, city FROM withdrawal WHERE id_article = :idArticle;";
     @Override
     public void addWithDrawal(Article article) {
         User user = this.userDAOInterface.readUserById(article.getUser().getIdUser());
 
         MapSqlParameterSource namedParameters = new MapSqlParameterSource()
                 .addValue("idArticle", article.getIdArticle())
-                .addValue("roadName", user.getRoadName())
-                .addValue("postal_code", user.getPostalCode())
-                .addValue("city", user.getCity());
+                .addValue("roadName", user.getPersonnalRoadName())
+                .addValue("postal_code", user.getPersonnalPostalCode())
+                .addValue("city", user.getPersonnalCity());
 
         namedParameterJdbcTemplate.update(ADD_WITHDRAWAL,namedParameters);
     }

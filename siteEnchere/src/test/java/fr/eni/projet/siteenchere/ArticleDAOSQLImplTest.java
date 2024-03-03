@@ -41,6 +41,7 @@ class ArticleDAOSQLImplTest {
     @Transactional
     void getArticlesByCategoryTest() {
         List<Article> articles = articleDAOSQLImpl.getArticleByCategories(1L);
+        System.out.println(articles.size());
         for (Article article : articles) {
             System.out.println(article);
         }

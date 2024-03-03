@@ -125,8 +125,16 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
 
                     User user = new User();
                     user.setIdUser(resulSet.getLong("id_user"));
+                    user.setPseudo(resulSet.getString("pseudo"));
                     user.setFirstName(resulSet.getString("firstname"));
                     user.setLastName(resulSet.getString("lastname"));
+                    user.setEmail(resulSet.getString("email"));
+                    user.setPhone(resulSet.getString("phone"));
+                    user.setPersonnalRoadName(resulSet.getString("personnal_road_name"));
+                    user.setPersonnalPostalCode(resulSet.getString("personnal_postal_code"));
+                    user.setPersonnalCity(resulSet.getString("personnal_city"));
+                    user.setCredit(resulSet.getLong("credit"));
+                    user.setAdmin(resulSet.getBoolean("admin"));
                     user.setWithdrawal(withdrawal);
 
                     Article article = new Article();
@@ -144,21 +152,54 @@ public class ArticleDAOSQLImpl implements ArticleDAOInterface {
 
                     Bid bid = new Bid();
                     bid.setBidDate(resulSet.getDate("bid_date"));
-                    bid.setBidAmount(resulSet.getInt("bid_price"));
+                    bid.setBidAmount(resulSet.getInt("bid_amount"));
                     bid.setUser(user);
-                    bid.setArticle(article);
-                    article.addBid(bid);
-
-                    articles.forEach(a -> {
-                        if (a.getIdArticle().equals(article.getIdArticle())) {
-                            a.addBid(article.getCurrentBidList().get(0));
-                        } else {
-                            articles.add(article);
+                    bid.setArticle(article.getIdArticle());
+                    boolean bool = false;
+                    if (articles.isEmpty()) {
+                        article.addBid(bid);
+                        articles.add(article);
+                    } else {
+                        for (Article art : articles) {
+                            if (art.getIdArticle().equals(article.getIdArticle())) {
+                                art.addBid(bid);
+                                bool = true;
+                            }
                         }
-                    });
+                        if (!bool) {
+                                article.addBid(bid);
+                                articles.add(article);
+                        }
+                    }
                 }
                 return articles;
             });
+//        Article{
+//            idArticle=1,
+//            articleName = 'Article Electronique',
+//            description='Un article électronique',
+//            bidStartDay=2024-01-01,
+//            bidEndDay=2024-01-10,
+//            startingPrice=100,
+//            finalPrice=null,
+//            sellingStatus='null',
+//            idUser=1,
+//            user = User{
+//                idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]},
+//            idCategory=1,
+//            category = Category { idCategory=1, catName='Electronique', articleCategorys=[]},
+//            withdrawal= Withdrawal{roadName='Rue de la Liberté', postalCode='75001', city='Paris', articles=null},
+//            currentBid = [
+//                    Bid{bidDate=2024-03-01, bidAmount=75, article=1, user = User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[],purchasedItemsList=[],currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=60, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=90, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=70, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=55, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=80, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=65, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=85, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}},
+//                    Bid{bidDate=2024-03-01, bidAmount=95, article=1, user=User{idUser=1, pseudo='jdupont', lastName='Dupont', firstName='Jean', email='jdupont@gmail.com', phone='0123456789', roadName='1 rue de Paris', postalCode='75001', city='Paris', password='null', admin=false, salesList=[], purchasedItemsList=[], currentBid=[]}}
+//        ]}
         } catch (EmptyResultDataAccessException e) {
             return Collections.emptyList();
         }
